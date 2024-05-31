@@ -6,7 +6,7 @@ $logged = isset($_SESSION['nickname']) ;
 <header>
     <nav class="flex justify-center space-x-3 text-white mb-10 py-2 font-bold items-center">
       <a href="#" class="px-4">Home</a>
-      <a href="#" class="px-4">About</a>
+      <a href="about.php" class="px-4">About</a>
       <a href="#" class="px-4">Contact</a>
       <div
         class="flex px-5 space-x-4 py-3 rounded-full shadow-md shadow-primary-light bg-white items-center text-black">

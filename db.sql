@@ -18,6 +18,9 @@ CREATE TABLE films (
     synopsis TEXT NOT NULL,
     realisateur_id INT NOT NULL,
     vu BOOLEAN NOT NULL DEFAULT 0,
+    type ENUM('film', 'serie') NOT NULL DEFAULT 'film',
+    rating FLOAT NOT NULL DEFAULT 0,
+    season INT NULL;
     FOREIGN KEY (realisateur_id) REFERENCES realisateurs(id)
 );
 

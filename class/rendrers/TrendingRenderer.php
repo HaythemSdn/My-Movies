@@ -12,10 +12,11 @@ class TrendingRenderer {
         // Split the tags string into an array
         $tagsArray = explode(',', $this->tags);
         ?>
-        <article class="cart flex flex-col items-center relative rounded-xl shadow-lg pb-3 mb-10 w-[400px] h-[400px] bg-white">
+         <a href="film.php?titre=<?=$this->titre?> ">
+        <article class="cart flex flex-col items-center relative rounded-xl shadow-lg pb-3 mb-10 w-[400px] h-[400px] bg-white hover:scale-105 transition-all duration-300 ease-in-out">
             <div class="relative group">
                 <img src="<?= htmlspecialchars($this->affiche) ?>" alt="film affiche"
-                     class="w-[400px] h-[300px] rounded-t-xl object-cover hover:scale-105 transition-all duration-300 ease-in-out" />
+                     class="w-[400px] h-[300px] rounded-t-xl object-cover " />
                 <div class="hidden group-hover:flex absolute bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg">
                     <div class="px-3 py-2 border-r">
                         <i id="heart-icon" class="fa-regular fa-heart w-5 h-5 text-primary cursor-pointer"></i>
@@ -36,5 +37,6 @@ class TrendingRenderer {
             <span class="absolute top-0 left-0 bg-red-500 text-white px-4 py-1 rounded-tl-xl rounded-br-xl"><?= htmlspecialchars($this->date_sortie) ?></span>
             <i id="heart-icon-top" class="fa-regular fa-heart absolute top-0 right-0 w-5 h-5 text-white cursor-pointer"></i>
         </article>
+        </a>
     <?php }
 }

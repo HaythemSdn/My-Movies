@@ -4,7 +4,7 @@ $logged = isset($_SESSION['nickname']) ;
 ?>
 
 <header>
-    <nav class="flex justify-center space-x-3 text-white py-3 font-bold items-center">
+    <nav class="flex justify-center space-x-3 text-white mb-10 py-2 font-bold items-center">
       <a href="#" class="px-4">Home</a>
       <a href="#" class="px-4">About</a>
       <a href="#" class="px-4">Contact</a>

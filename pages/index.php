@@ -10,6 +10,7 @@ $film = new Film();
 $trending = $film->getTrending();
 $recent = $film->getRecent();
 $newFilms = $film->getNewFilms();
+$newSeries = $film->getNewSeries();
 ob_start()
 ?>
 <!-- crousel -->
@@ -66,15 +67,6 @@ ob_start()
         <?php else : ?>
           <p>No recent films found.</p>
         <?php endif; ?>
-
-        <!-- <div class="flex  flex-shrink-0 flex-grow-0 justify-center items-center shadow-md shadow-gray-700">
-            <img src="../images/1.jpeg" alt="" class="w-60 h-40 object-cover rounded-l-lg">
-            <div class="px-4 ">
-              <p class="text-white">The Conjuring</p>
-              <p class="text-white">2021</p>
-            </div>
-          </div> -->
-
       </div>
       <span class="px-3 py-2 sm:absolute static sm:top-0 mt-10 sm:m-0 sm:right-0 border-2 border-white cursor-pointer hover:bg-white rounded-md hover:text-primary hover:border-transparent">Voir
         <i class="fas fa-plus ml-3 text-secondary"></i>
@@ -89,31 +81,6 @@ ob_start()
         Trending
       </p>
       <div class="flex flex-wrap justify-around ">
-        <!-- <div class="cart flex flex-col items-center  relative rounded-xl shadow-lg  pb-3 mb-10 w-[400px] bg-white">
-          <div class="relative group">
-            <img src="../images/1.jpeg" alt="Food Image" class=" w-full h-8/12 rounded-t-lg object-cover hover:scale-105 transition-all duration-300 ease-in-out" />
-            <div class="hidden group-hover:flex absolute bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg">
-              <div class="px-3 py-2 border-r">
-                <i id="heart-icon" class="fa-regular fa-heart w-5 h-5 text-primary cursor-pointer"></i>
-              </div>
-              <div class="px-3 py-2">
-                <i class="fa-regular fa-eye w-5 h-5 text-primary cursor-pointer"></i>
-              </div>
-            </div>
-          </div>
-          <p class="name text-primary py-2">The pirats of caribiean</p>
-          <div class="desc flex">
-            <div class="tags flex justify-center items-center space-x-1 ">
-              <span class="tag bg-secondary px-2 py-1 rounded-lg ">Action</span>
-              <span class="tag bg-secondary px-2 py-1 rounded-lg">Adventure</span>
-              <span class="tag bg-secondary px-2 py-1 rounded-lg">Fantasy</span>
-
-            </div>
-          </div>
-          <span class="absolute top-0 left-0 bg-red-500 text-white px-4 py-1 rounded-tl-xl rounded-br-xl">-44%</span>
-          <i id="heart-icon-top" class="fa-regular fa-heart absolute top-0 right-0 w-5 h-5 text-white cursor-pointer"></i>
-        </div> -->
-
         <?php if (!empty($trending)) : ?>
           <?php foreach ($trending as $t) : ?>
           <?= $t->getHTML(); ?>
@@ -134,28 +101,6 @@ ob_start()
         New Release - Movies
       </p>
       <div class="flex flex-wrap justify-around w-full">
-        <!-- <div class="cart flex flex-col items-center  relative rounded-xl shadow-lg  pb-3 mb-10 w-[250px] ">
-          <div class="relative group">
-            <img src="../images/1.jpeg" alt="Food Image" class=" w-full h-[300px] rounded-t-lg object-cover " />
-            <div class="hidden group-hover:flex absolute bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg">
-              <div class="px-3 py-2 border-r">
-                <i id="heart-icon" class="fa-regular fa-heart w-5 h-5 text-primary cursor-pointer"></i>
-              </div>
-              <div class="px-3 py-2">
-                <i class="fa-regular fa-eye w-5 h-5 text-primary cursor-pointer"></i>
-              </div>
-            </div>
-          </div>
-          <div class="desc flex justify-between w-full text-sm">
-            <p class="name text-pwhite font-bold py-2 ">The pirats of caribiean</p>
-            <div class="resolution flex justify-center items-center space-x-1 ">
-              <span class="tag bg-secondary px-1  ">HD</span>
-              <span class="time border border-secondary px-1">3:10:48</span>
-            </div>
-          </div>
-          <span class="absolute top-0 left-0 bg-red-500 text-white px-4 py-1 rounded-tl-xl rounded-br-xl">-44%</span>
-          <i id="heart-icon-top" class="fa-regular fa-heart absolute top-0 right-0 w-5 h-5 text-white cursor-pointer"></i>
-        </div> -->
         <?php if (!empty($newFilms)) : ?>
           <?php foreach ($newFilms as $n) : ?>
           <?= $n->getHTML(); ?>
@@ -163,7 +108,6 @@ ob_start()
         <?php else : ?>
           <p>No New Release Movies films found.</p>
         <?php endif; ?>
-
       </div>
 
     </div>
@@ -175,29 +119,15 @@ ob_start()
       <p class="lg:text-4xl md:text-3xl self-start  tracking-widest font-normal mb-16 uppercase">
         New Release - Series
       </p>
-      <div class="flex flex-wrap justify-around ">
-        <div class="cart flex flex-col items-center  relative rounded-xl shadow-lg  pb-3 mb-10 w-[250px] ">
-          <div class="relative group">
-            <img src="../images/1.jpeg" alt="Food Image" class=" w-full h-[300px] rounded-t-lg object-cover " />
-            <div class="hidden group-hover:flex absolute bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg">
-              <div class="px-3 py-2 border-r">
-                <i id="heart-icon" class="fa-regular fa-heart w-5 h-5 text-primary cursor-pointer"></i>
-              </div>
-              <div class="px-3 py-2">
-                <i class="fa-regular fa-eye w-5 h-5 text-primary cursor-pointer"></i>
-              </div>
-            </div>
-          </div>
-          <div class="desc flex justify-between w-full text-sm">
-            <p class="name text-pwhite font-bold py-2 ">The pirats of caribiean</p>
-            <div class="resolution flex justify-center items-center space-x-1 ">
-              <span class="tag bg-secondary px-1  ">HD</span>
-              <span class="season border border-secondary px-1">season 1</span>
-            </div>
-          </div>
-          <span class="absolute top-0 left-0 bg-red-500 text-white px-4 py-1 rounded-tl-xl rounded-br-xl">-44%</span>
-          <i id="heart-icon-top" class="fa-regular fa-heart absolute top-0 right-0 w-5 h-5 text-white cursor-pointer"></i>
-        </div>
+      <div class="flex flex-wrap justify-around w-full ">
+        <?php if (!empty($newSeries)) : ?>
+          <?php foreach ($newSeries as $n) : ?>
+          <?= $n->getHTML(); ?>
+        <?php endforeach; ?>
+        <?php else : ?>
+          <p>No New Release Series found.</p>
+        <?php endif; ?>
+
       </div>
 
     </div>

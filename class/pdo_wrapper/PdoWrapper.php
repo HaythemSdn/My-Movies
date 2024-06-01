@@ -36,6 +36,9 @@ class PdoWrapper
     
             // Check if the statement was an INSERT, UPDATE, or DELETE
             if (preg_match('/^\s*(INSERT|UPDATE|DELETE)/i', $statement)) {
+                if (preg_match('/^\s*INSERT/i', $statement)) {
+                    return $this->pdo->lastInsertId(); // Return the ID of the inserted row
+                }
                 return $success; // Return true if the operation was successful
             }
     

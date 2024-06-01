@@ -8,7 +8,6 @@ include __DIR__ . "../../../DB_CREDENTIALS.php" ;
 class MoviesDB extends PdoWrapper
 {
 
-    public const UPLOAD_DIR = "uploads/" ;
 
     public function __construct(){
         // appel au constructeur de la classe mère
@@ -21,7 +20,7 @@ class MoviesDB extends PdoWrapper
     }
 
 
-
+    //login and signup
     public function signup($username, $password){
         $query = 'INSERT INTO users(username, password) VALUES (:username, :password)' ;
         $params = [
@@ -41,31 +40,6 @@ class MoviesDB extends PdoWrapper
         }
         return null;
     }
-    public function createFilm($name, $description=null, $imgFile=null){
-
-        $name = htmlspecialchars($name) ;
-        $description = htmlspecialchars($description) ;
-
-        $imgName = null ;
-        // enregistrement du fichier uploadé
-        if($imgFile != null){
-            $tmpName = $imgFile['tmp_name'] ;
-            $imgName = $imgFile['name'] ;
-            $imgName = urlencode(htmlspecialchars($imgName)) ;
-
-            $dirname = $GLOBALS['PHP_DIR'].self::UPLOAD_DIR ;
-            if(!is_dir($dirname)) mkdir($dirname) ;
-            $uploaded = move_uploaded_file($tmpName, $dirname.$imgName) ;
-            if (!$uploaded) die("FILE NOT UPLOADED") ;
-        }else echo "NO IMAGE !!!!" ;
-
-        $query = 'INSERT INTO Films(name, description, image) VALUES (:name, :description, :image)';
-        $params=[
-            'name' => htmlspecialchars($name),
-            'description' => htmlspecialchars($description),
-            'image' => $imgName
-        ] ;
-        return $this->exec($query, $params) ;
-    }
+   
 
 }

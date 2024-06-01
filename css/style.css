@@ -2,8 +2,12 @@ nav a:hover:not(:last-child){
     border-bottom:1px solid red ;
 }
 
+.selected{
+    background-color: red;
+    border-bottom: 2px solid white !important;
+}
 
-
+/* scroll bar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 2px !important;
   height: 5px; /* Thinner scrollbar */

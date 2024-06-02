@@ -21,98 +21,99 @@ class AddFilm
 ?>
 
 
-                        <form id="film-form" method="POST" enctype="multipart/form-data" class="w-10/12 mx-auto text-black flex flex-col space-y-4">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <label for="titre" class="block text-sm font-semibold text-white mb-2 ">Title</label>
-                                    <input type="text" class="block w-[220px] h-[50px] p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="titre" name="titre" aria-describedby="titre">
-                                </div>
-                                <div>
-                                    <label for="date_sortie" class="block text-sm font-semibold text-white mb-2 ">Release Date</label>
-                                    <input type="date" class="block w-[220px] h-[50px] p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="date_sortie" name="date_sortie">
-                                </div>
-                                <div>
-                                    <label for="type" class="block text-sm font-semibold text-white mb-2 ">Type</label>
-                                    <select id="type" name="type" class="block w-[220px] h-[50px] p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
-                                        <option value="film">Film</option>
-                                        <option value="serie">Series</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="flex justify-around items-center">
-                                <div id="season-container" style="display: none;">
-                                    <label for="season" class="block text-sm font-semibold text-white mb-2 ">Season</label>
-                                    <input type="number" class="block w-[220px] h-[50px] p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="season" name="season">
-                                </div>
-                                <div>
-                                    <label for="realisateur_id" class="block text-sm font-semibold text-white mb-2 ">Director</label>
-                                    <select id="realisateur_id" name="realisateur_id" class="block w-[220px] h-[50px] p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
-                                        <?php foreach ($directors as $director) : ?>
-                                            <option value="<?= $director->id ?>"><?= htmlspecialchars($director->nom) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="description" class="block text-sm font-semibold text-white mb-2 ">Description</label>
-                                    <textarea class="block w-[220px] h-[50px] p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="description" name="description"></textarea>
-                                </div>
-                            </div>
+        <form id="film-form" method="POST" enctype="multipart/form-data" class="w-10/12 mx-auto text-black flex flex-col h-[500px] overflow-y-auto items-center space-y-4 p-10" >
+            <div class="flex justify-center items-center">
+                <div>
+                    <label for="titre" class="block text-sm font-semibold text-white mb-2 ">Title</label>
+                    <input required type="text" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="titre" name="titre" aria-describedby="titre">
+                </div>
+                <div>
+                    <label for="date_sortie" class="block text-sm font-semibold text-white mb-2 ">Release Date</label>
+                    <input required type="date" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="date_sortie" name="date_sortie">
+                </div>
+                
+            </div>
+            <div class="flex justify-center items-center">
+                <div>
+                    <label for="realisateur_id" class="block text-sm font-semibold text-white mb-2 ">Director</label>
+                    <select required id="realisateur_id" name="realisateur_id" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
+                    <?php foreach ($directors as $director) : ?>
+                            <option value="<?= $director->id ?>" class="py-5 hover:bg-secondary hover:text-white"><?= htmlspecialchars($director->nom) ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>
+                <div>
+                    <label for="type" class="block text-sm font-semibold text-white mb-2 ">Type</label>
+                    <select required id="type" name="type" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
+                        <option value="film">Film</option>
+                        <option value="serie">Series</option>
+                    </select>
+                </div>
 
-                            <div class="flex justify-around items-center">
-                                <div>
-                                    <div class="relative inline-block w-full">
-                                    <p  class="text-sm font-semibold text-white mb-2 ">Actors</p> 
-                                        <div id="addActorBtn" class=" flex justify-between items-center w-[220px] h-[50px] p-2  bg-white border rounded-md cursor-pointer focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
-                                            <p>Add actors</p>
-                                            <i id="actors-dropdown-icon" class="fas fa-caret-down"></i>
-                                        </div>
-                                        <div id="actors-dropdown" class="absolute z-90 hidden w-full mt-2 overflow-hidden bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto">
-                                            <?php foreach ($actors as $actor) : ?>
-                                                <div class="px-4 py-2 border-b hover:bg-gray-200">
-                                                    <label class="inline-flex items-center">
-                                                        <input type="checkbox" name="actors[]" value="<?= $actor->id ?>" class="form-checkbox">
-                                                        <span class="ml-2"><?= htmlspecialchars($actor->nom) ?></span>
-                                                    </label>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    </div>
+            </div>
+            <div id="season-container"  style="display: none;">
+                    <label for="season" class="block text-sm font-semibold text-white mb-2 ">Season</label>
+                    <input required type="number" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="season" name="season">
+            </div>
+            <div>
+                    <label for="description" class="block text-sm font-semibold text-white mb-2 ">Description</label>
+                    <textarea required class="block w-[520px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="description" name="synopsis"></textarea>
+            </div>
+            <div class="flex justify-around items-center">
+                <div>
+                    <div class="relative inline-block w-full">
+                        <p class="text-sm font-semibold text-white mb-2 ">Actors</p>
+                        <div id="addActorBtn" class=" flex justify-between items-center w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md cursor-pointer focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
+                            <p>Add actors</p>
+                            <i id="actors-dropdown-icon" class="fas fa-caret-down"></i>
+                        </div>
+                        <div id="actors-dropdown" class="absolute z-90 hidden w-full mt-2 overflow-hidden bg-white border rounded-md shadow-lg max-h-32 overflow-y-auto">
+                            <?php foreach ($actors as $actor) : ?>
+                                <div class="px-4 py-2 border-b hover:bg-secondary hover:text-white  ">
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" name="actors[]" value="<?= $actor->id ?>" class="form-checkbox">
+                                        <span class="ml-2"><?= htmlspecialchars($actor->nom) ?></span>
+                                    </label>
                                 </div>
-                                <div>
-                                    <div class="relative inline-block w-full">
-                                    <p  class="text-sm font-semibold text-white mb-2 ">Tags</p>   
-                                        <div id="addTagBtn" class=" flex justify-between items-center w-[220px] h-[50px] p-2  bg-white border rounded-md cursor-pointer focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
-                                        <p>Add Tags</p>
-                                            <i id="tags-dropdown-icon" class="fas fa-caret-down"></i>
-                                        </div>
-                                        <div id="tags-dropdown" class="absolute z-90 hidden w-full mt-2 overflow-hidden bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto">
-                                            <?php foreach ($tags as $tag) : ?>
-                                                <div class="px-4 py-2 border-b hover:bg-gray-200">
-                                                    <label class="inline-flex items-center">
-                                                        <input type="checkbox" name="tags[]" value="<?= $tag->id ?>" class="form-checkbox">
-                                                        <span class="ml-2"><?= htmlspecialchars($tag->nom) ?></span>
-                                                    </label>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="relative inline-block w-full">
+                        <p class="text-sm font-semibold text-white mb-2 ">Tags</p>
+                        <div id="addTagBtn" class=" flex justify-between items-center w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md cursor-pointer focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
+                            <p>Add Tags</p>
+                            <i id="tags-dropdown-icon" class="fas fa-caret-down"></i>
+                        </div>
+                        <div id="tags-dropdown" class="absolute z-90 hidden w-full mt-2 overflow-hidden bg-white border rounded-md shadow-lg max-h-32 overflow-y-auto">
+                            <?php foreach ($tags as $tag) : ?>
+                                <div class="px-4 py-2 border-b  hover:bg-secondary hover:text-white">
+                                    <label class="inline-flex items-center ">
+                                        <input type="checkbox" name="tags[]" value="<?= $tag->id ?>" class="form-checkbox">
+                                        <span class="ml-2"><?= htmlspecialchars($tag->nom) ?></span>
+                                    </label>
                                 </div>
-                                
-                            </div>
-                            <div>
-                                <label for="image" class="block text-sm font-semibold text-white mb-2 ">Image</label>
-                                <input type="file" class="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="image" name="image" accept="image/png, image/gif, image/jpeg">
-                                <div id="preview-container" class="mt-2">
-                                    <img id="preview-image" src="" class="w-[400px]  h-[400px] object-cover object-center rounded-md">
-                                </div>
-                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <label for="image" class="block text-sm font-semibold text-white mb-2 ">Image</label>
+                <input required type="file" class="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40 mb-4" id="image" name="affiche" accept="image/png, image/gif, image/jpeg">
+                <div id="preview-container" class=" flex justify-center rounded-md">
+                    <img id="preview-image" src="" class="object-cover max-h-[500px] max-w-[600px]">
+                </div>
+            </div>
 
 
-                            <div class="flex justify-around items-center pt-7">
-                                <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Submit</button>
-                                <button type="reset" class="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Reset</button>
-                            </div>
-                        </form>
+            <div class="flex space-x-7 text-xl items-center pt-7">
+                <button type="submit" class="px-4 py-2 text-white l rounded-md bg-green-600 focus:outline-none focus:bg-blue-600">Submit</button>
+                <button type="reset" class="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Reset</button>
+            </div>
+        </form>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -179,6 +180,7 @@ class AddFilm
                     toggleDropdown("tags-dropdown");
                 });
 
+
             });
         </script>
 <?php
@@ -186,8 +188,8 @@ class AddFilm
 
     public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null, $season = null, $actors = [], $tags = [])
     {
-
         $film_id = $this->admin->createFilm($titre, $date_sortie, $realisateur_id, $type, $description, $imgFile, $season);
+
         // Add actors to the film
         foreach ($actors as $actor_id) {
             $this->admin->addActorToFilm($film_id, $actor_id);
@@ -197,7 +199,7 @@ class AddFilm
         foreach ($tags as $tag_id) {
             $this->admin->addTagToFilm($film_id, $tag_id);
         }
-        // header('Location: films_list.php');
+        header('Location: index.php');
         exit();
     }
 }

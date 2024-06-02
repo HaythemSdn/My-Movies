@@ -20,7 +20,7 @@ class Admin {
         return $result ? $result : []; 
     }
     // Create a new film in the database
-    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null, $season = null)
+    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null,$season)
     {
         $titre = htmlspecialchars($titre);
         $description = htmlspecialchars($description);
@@ -38,8 +38,7 @@ class Admin {
         } else {
             echo "NO IMAGE !!!!";
         }
-
-        $query = 'INSERT INTO Films (titre, date_sortie, affiche, synopsis, realisateur_id, rating, type, season) 
+        $query = 'INSERT INTO films (titre, date_sortie, affiche, synopsis, realisateur_id, rating, type, season) 
                   VALUES (:titre, :date_sortie, :affiche, :synopsis, :realisateur_id, :rating, :type, :season)';
         $params = [
             'titre' => $titre,
@@ -51,7 +50,10 @@ class Admin {
             'type' => $type,
             'season' => $type == 'serie' ? $season : null
         ];
-        return $this->mdb->exec($query, $params);
+
+        $result = $this->mdb->exec($query, $params);
+        
+        return $result;
     }
 
     public function addActorToFilm($film_id, $actor_id)

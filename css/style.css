@@ -24,3 +24,19 @@ nav a:hover:not(:last-child){
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background:gray;
   }
+  #preview-container{
+    margin-top: 10px;
+    max-height: 150px;
+    justify-content: center;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    display: flex;
+}
+
+#preview-image {
+    width: 100%;
+    object-fit: contain;
+}
+input[type="checkbox"] {
+  accent-color: red !important;   
+}

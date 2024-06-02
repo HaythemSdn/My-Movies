@@ -49,7 +49,7 @@ ob_start()
     </div>
     <!-- views -->
     <div id="views" class="w-10/12 justify-center items-center text-white overflow-y-auto">
-        <div id="1" class="hidden view">
+        <div id="1" class=" view">
             <section class="pt-16 pb-10 w-full">
                 <div class="flex flex-col justify-center items-center  w-10/12  mx-auto relative ">
                     <p class="lg:text-4xl md:text-3xl self-start text-2xl tracking-widest font-normal mb-16">
@@ -70,7 +70,7 @@ ob_start()
                 </div>
             </section>
         </div>
-        <div id="2" class=" view">
+        <div id="2" class="hidden view">
         <section class="pt-16 pb-10 w-full">
                 <div class="flex flex-col justify-center items-center  w-10/12  mx-auto relative ">
                     <p class=" lg:text-4xl md:text-3xl self-start text-2xl tracking-widest font-normal">
@@ -81,7 +81,9 @@ ob_start()
                         $AddFilm->generateForm() ;
                     }else{
                         $imgFile = isset($_FILES['affiche']) ? $_FILES['affiche'] : null ;
-                        $AddFilm->createFilm($_POST['titre'], $_POST['date_sortie'], $_POST['realisateur_id'], $_POST['type'], $_POST['description'], $imgFile, $_POST['season'], $_POST['actors'], $_POST['tags']);
+                        $tags = isset($_POST['tags']) ? $_POST['tags'] : [] ;
+                        $actors = isset($_POST['actors']) ? $_POST['actors'] : [] ;
+                        $AddFilm->createFilm($_POST['titre'], $_POST['date_sortie'], $_POST['realisateur_id'], $_POST['type'], $_POST['synopsis'], $imgFile, $_POST['season'], $actors, $tags);
                     }
                     ?>
                 </div>

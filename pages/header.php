@@ -7,7 +7,7 @@ $logged = isset($username);
 <header>
   <nav class="hidden md:flex justify-center space-x-1 lg:space-x-3 text-white mb-10 py-2 font-bold items-center  ">
     <a href="#" class="px-1 lg:px-4">Home</a>
-    <a href="#" class="px-1 lg:px-4">About</a>
+    <a href="about.php" class="px-1 lg:px-4">About</a>
     <a href="#" class="px-1 lg:px-4">Contact</a>
     <div class="flex px-5 space-x-2 lg:space-x-4 py-3 rounded-full shadow-md shadow-primary-light bg-white items-center text-black">
       <input type="text" placeholder="Search movies....." class="lg:pr-8 lg:mr-2 xl:pr-24 xl:mr-5 outline-none capitalize bg-white text-lg tracking-widest placeholder-primary-light" />

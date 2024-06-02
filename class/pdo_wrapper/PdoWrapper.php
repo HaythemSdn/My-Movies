@@ -31,15 +31,15 @@ class PdoWrapper
 
     public function exec($statement, $params, $classname = null) {
         try {
+
             $res = $this->pdo->prepare($statement);
-            $success = $res->execute($params);
-    
+            $res->execute($params) or die(print_r($res->errorInfo()));
+
             // Check if the statement was an INSERT, UPDATE, or DELETE
             if (preg_match('/^\s*(INSERT|UPDATE|DELETE)/i', $statement)) {
                 if (preg_match('/^\s*INSERT/i', $statement)) {
                     return $this->pdo->lastInsertId(); // Return the ID of the inserted row
                 }
-                return $success; // Return true if the operation was successful
             }
     
             // For SELECT statements or other queries, fetch the results

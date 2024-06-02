@@ -15,6 +15,7 @@ $logged = isset($username);
     </div>
     <a href="#" class="px-1 lg:px-4">Movies</a>
     <a href="#" class="px-1 lg:px-4">Series</a>
+    <a href="actor.php" class="px-1 lg:px-4">Actors</a>
     <?php
     if ($logged) { ?>
       <div class="relative group pb-1 text-center">

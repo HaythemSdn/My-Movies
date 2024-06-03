@@ -100,5 +100,19 @@ class Admin {
         );
         return $result ? $result : []; 
     }
+
+    public function createActor($nom, $imgName)
+{
+    $nom = htmlspecialchars($nom);
+    $query = 'INSERT INTO acteurs (nom, image) VALUES (:nom, :image)';
+    $params = [
+        'nom' => $nom,
+        'image' => $imgName,
+    ];
+
+    $result = $this->mdb->exec($query, $params);
+    return $result;
+}
+
 }
 

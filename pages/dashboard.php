@@ -94,8 +94,25 @@ ob_start()
             this is add category view
         </div>
         <div id="4" class="hidden view">
-            this is add actor view
+    <section class="pt-16 pb-10 w-full">
+        <div class="flex flex-col justify-center items-center w-10/12 mx-auto relative">
+            <p class="lg:text-4xl md:text-3xl self-start text-2xl tracking-widest font-normal">
+                Add Actor
+            </p>
+            <?php
+            use rendrers\AdminForms\AddActor;
+            $addActor = new AddActor();
+            if (empty($_POST['nom'])) {
+                $addActor->generateForm();
+            } else {
+                $imgFile = isset($_FILES['image']) ? $_FILES['image'] : null;
+                $addActor->createActor($_POST['nom'], $imgFile);
+            }
+            ?>
         </div>
+    </section>
+</div>
+
         <div id="5" class="hidden view">
             this is add director view
         </div>

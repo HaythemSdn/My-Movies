@@ -15,12 +15,9 @@ ob_start()
 
 
     <div class="w-full 2xl:w-9/12  xl:10/12 mx-auto space-y-4 flex flex-col justify-center items-center">
-
      <?php $CurrentFilm->getHTML()   ?>
     </div>
-  </body>
 
-</html>
 <?php $content = ob_get_clean() ?>
 <!-- Utilisation du contenu bufferisé -->
 <?php Template::render($content) ?>

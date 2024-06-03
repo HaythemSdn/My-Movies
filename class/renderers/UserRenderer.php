@@ -1,6 +1,6 @@
 <?php
 
-namespace rendrers;
+namespace renderers;
 
 class UserRenderer
 {

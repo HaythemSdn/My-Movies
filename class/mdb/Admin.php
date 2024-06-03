@@ -15,12 +15,12 @@ class Admin {
         $result = $this->mdb->exec(
             "SELECT * FROM users",
             null,
-            'rendrers\UserRenderer'
+            'renderers\UserRenderer'
         );
         return $result ? $result : []; 
     }
     // Create a new film in the database
-    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null,$season)
+    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null)
     {
         $titre = htmlspecialchars($titre);
         $description = htmlspecialchars($description);
@@ -38,8 +38,8 @@ class Admin {
         } else {
             echo "NO IMAGE !!!!";
         }
-        $query = 'INSERT INTO films (titre, date_sortie, affiche, synopsis, realisateur_id, rating, type, season) 
-                  VALUES (:titre, :date_sortie, :affiche, :synopsis, :realisateur_id, :rating, :type, :season)';
+        $query = 'INSERT INTO films (titre, date_sortie, affiche, synopsis, realisateur_id, rating, type) 
+                  VALUES (:titre, :date_sortie, :affiche, :synopsis, :realisateur_id, :rating, :type)';
         $params = [
             'titre' => $titre,
             'date_sortie' => $date_sortie,
@@ -48,7 +48,6 @@ class Admin {
             'realisateur_id' => $realisateur_id,
             'rating' => 0,
             'type' => $type,
-            'season' => $type == 'serie' ? $season : null
         ];
 
         $result = $this->mdb->exec($query, $params);
@@ -104,7 +103,7 @@ class Admin {
     public function createActor($nom, $imgName)
 {
     $nom = htmlspecialchars($nom);
-    $query = 'INSERT INTO acteurs (nom, image) VALUES (:nom, :image)';
+    $query = 'INSERT INTO acteurs (nom, photo) VALUES (:nom, :image)';
     $params = [
         'nom' => $nom,
         'image' => $imgName,

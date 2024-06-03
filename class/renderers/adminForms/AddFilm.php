@@ -1,6 +1,6 @@
 <?php
 
-namespace rendrers\AdminForms;
+namespace renderers\adminForms;
 
 use mdb\Admin;
 
@@ -21,7 +21,10 @@ class AddFilm
 ?>
 
 
-        <form id="film-form" method="POST" enctype="multipart/form-data" class="w-10/12 mx-auto text-black flex flex-col h-[500px] overflow-y-auto items-center space-y-4 p-10" >
+        <div id="error" class="hidden w-10/12 mx-auto bg-red-200 text-lg py-1 font-semibold text-center mt-10">
+            <p class="text-red-600 text-center">you must select one tag and one actor as minimum </p>
+        </div>
+        <form id="film-form" method="POST" enctype="multipart/form-data" class="w-10/12 mx-auto text-black flex flex-col h-[500px] overflow-y-auto items-center space-y-4 p-10">
             <div class="flex justify-center items-center">
                 <div>
                     <label for="titre" class="block text-sm font-semibold text-white mb-2 ">Title</label>
@@ -31,33 +34,30 @@ class AddFilm
                     <label for="date_sortie" class="block text-sm font-semibold text-white mb-2 ">Release Date</label>
                     <input required type="date" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="date_sortie" name="date_sortie">
                 </div>
-                
+
             </div>
             <div class="flex justify-center items-center">
                 <div>
                     <label for="realisateur_id" class="block text-sm font-semibold text-white mb-2 ">Director</label>
                     <select required id="realisateur_id" name="realisateur_id" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
-                    <?php foreach ($directors as $director) : ?>
+                        <?php foreach ($directors as $director) : ?>
                             <option value="<?= $director->id ?>" class="py-5 hover:bg-secondary hover:text-white"><?= htmlspecialchars($director->nom) ?></option>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div>
                     <label for="type" class="block text-sm font-semibold text-white mb-2 ">Type</label>
                     <select required id="type" name="type" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
                         <option value="film">Film</option>
-                        <option value="serie">Series</option>
+                        <option value="serie">Serie</option>
                     </select>
                 </div>
 
             </div>
-            <div id="season-container"  style="display: none;">
-                    <label for="season" class="block text-sm font-semibold text-white mb-2 ">Season</label>
-                    <input required type="number" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="season" name="season">
-            </div>
+
             <div>
-                    <label for="description" class="block text-sm font-semibold text-white mb-2 ">Description</label>
-                    <textarea required class="block w-[520px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="description" name="synopsis"></textarea>
+                <label for="description" class="block text-sm font-semibold text-white mb-2 ">Description</label>
+                <textarea required class="block w-[520px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="description" name="synopsis"></textarea>
             </div>
             <div class="flex justify-around items-center">
                 <div>
@@ -102,7 +102,7 @@ class AddFilm
             </div>
             <div>
                 <label for="image" class="block text-sm font-semibold text-white mb-2 ">Image</label>
-                <input required type="file" class="block w-full px-4 py-2 mt-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40 mb-4" id="image" name="affiche" accept="image/png, image/gif, image/jpeg">
+                <input required type="file" class="block w-[520px] px-4 py-2 mt-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40 mb-4" id="affiche" name="affiche" accept="image/png, image/gif, image/jpeg">
                 <div id="preview-container" class=" flex justify-center rounded-md">
                     <img id="preview-image" src="" class="object-cover max-h-[500px] max-w-[600px]">
                 </div>
@@ -110,23 +110,19 @@ class AddFilm
 
 
             <div class="flex space-x-7 text-xl items-center pt-7">
-                <button type="submit" class="px-4 py-2 text-white l rounded-md bg-green-600 focus:outline-none focus:bg-blue-600">Submit</button>
+                <button type="submit" class="px-4 py-2 text-white l rounded-md bg-green-600 focus:outline-none focus:bg-blue-600">Add</button>
                 <button type="reset" class="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Reset</button>
             </div>
         </form>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Type and season
-                const typeSelect = document.getElementById("type");
-                const seasonContainer = document.getElementById("season-container");
-                typeSelect.addEventListener("change", function() {
-                    if (this.value === "serie") {
-                        seasonContainer.style.display = "block";
-                    } else {
-                        seasonContainer.style.display = "none";
-                    }
-                });
+
+                const error = document.getElementById("error");
+                const actorInput = document.querySelectorAll('input[name="actors[]"]');
+                const tagInput = document.querySelectorAll('input[name="tags[]"]');
+                let actorChecked = false;
+                let tagChecked = false;
 
                 // Image preview
                 const preview = document.getElementById("preview-image");
@@ -135,7 +131,7 @@ class AddFilm
                     preview.src = e.target.result;
                 }
 
-                const fileInput = document.getElementById("image");
+                const fileInput = document.getElementById("affiche");
                 fileInput.addEventListener('change', () => {
                     let file = fileInput.files[0];
                     if (file && file.type.split('/')[0] === "image") {
@@ -149,10 +145,29 @@ class AddFilm
                 let form = document.getElementById("film-form");
                 let titre = document.getElementById("titre");
                 form.addEventListener('submit', (ev) => {
+                    actorInput.forEach(input => {
+                        if (input.checked) {
+                            actorChecked = true;
+                        }
+                    });
+                    tagInput.forEach(input => {
+                        if (input.checked) {
+                            tagChecked = true;
+                        }
+                    });
                     if (titre.value == "") {
-                        ev.preventDefault();
                         titre.classList.add("border-red-500");
+                        ev.preventDefault();
+
                     }
+                    if (!actorChecked || !tagChecked) {
+                        error.classList.remove("hidden");
+                        ev.preventDefault();
+
+                    } else {
+                        error.classList.add("hidden");
+                    }
+
                 });
                 titre.addEventListener('keydown', () => {
                     titre.classList.remove("border-red-500");
@@ -186,9 +201,9 @@ class AddFilm
 <?php
     }
 
-    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null, $season = null, $actors = [], $tags = [])
+    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null, $actors = [], $tags = [])
     {
-        $film_id = $this->admin->createFilm($titre, $date_sortie, $realisateur_id, $type, $description, $imgFile, $season);
+        $film_id = $this->admin->createFilm($titre, $date_sortie, $realisateur_id, $type, $description, $imgFile);
 
         // Add actors to the film
         foreach ($actors as $actor_id) {
@@ -199,7 +214,7 @@ class AddFilm
         foreach ($tags as $tag_id) {
             $this->admin->addTagToFilm($film_id, $tag_id);
         }
-        header('Location: index.php');
+        header('Location: search.php?content=films');  
         exit();
     }
 }

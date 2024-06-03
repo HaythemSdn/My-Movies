@@ -6,7 +6,7 @@ Autoloader::register();
 
 
 use mdb\Admin;
-use rendrers\AdminForms\AddFilm;
+use renderers\adminForms\AddFilm;
 
 $admin = new Admin();
 $AddFilm = new AddFilm();
@@ -83,7 +83,7 @@ ob_start()
                         $imgFile = isset($_FILES['affiche']) ? $_FILES['affiche'] : null ;
                         $tags = isset($_POST['tags']) ? $_POST['tags'] : [] ;
                         $actors = isset($_POST['actors']) ? $_POST['actors'] : [] ;
-                        $AddFilm->createFilm($_POST['titre'], $_POST['date_sortie'], $_POST['realisateur_id'], $_POST['type'], $_POST['synopsis'], $imgFile, $_POST['season'], $actors, $tags);
+                        $AddFilm->createFilm($_POST['titre'], $_POST['date_sortie'], $_POST['realisateur_id'], $_POST['type'], $_POST['synopsis'], $imgFile, $actors, $tags);
                     }
                     ?>
                 </div>
@@ -100,7 +100,7 @@ ob_start()
                 Add Actor
             </p>
             <?php
-            use rendrers\AdminForms\AddActor;
+            use renderers\adminForms\AddActor;
             $addActor = new AddActor();
             if (empty($_POST['nom'])) {
                 $addActor->generateForm();

@@ -1,36 +1,31 @@
 <?php
 
-namespace rendrers;
+namespace renderers;
 
-class FilmRenderer
+class FilmPageRenderer
 {
     private $titre;
     private $tags;
     private $date_sortie;
     private $affiche;
-    private $realisateur;
+    private $realisateur_nom;
+    private $realisateur_photo;
+    private $rating;
+    private $type;
     private $acteurs_noms;
     private $acteurs_photos;
     private $synopsis;
 
-    public function __construct($data)
-    {
-        $this->titre = $data->titre;
-        $this->tags = explode(',', $data->tags);
-        $this->date_sortie = $data->date_sortie;
-        $this->affiche = $data->affiche;
-        $this->realisateur = (object) [
-            'nom' => $data->realisateur_nom,
-            'photo' => $data->realisateur_photo
-        ];
-        $this->synopsis = $data->synopsis;
-        $this->acteurs_noms = explode(',', $data->acteur_noms);
-        $this->acteurs_photos = explode(',', $data->acteur_photos);
-    }
+
 
 
     public function getHTML()
     {
+        $tags = explode(',', $this->tags); 
+        $acteurs_noms = explode(',', $this->acteurs_noms);
+        $acteurs_photos = explode(',', $this->acteurs_photos);
+        $realisateur = (object) ['nom' => $this->realisateur_nom, 'photo' => $this->realisateur_photo];
+
 ?>
         <!-- video trailer -->
         <section class="flex flex-col items-center space-y-4 justify-center">
@@ -44,7 +39,7 @@ class FilmRenderer
         <section class="flex flex-col lg:flex-row justify-center items-center w-full p-10">
             <!-- movie poster -->
             <div class="lg:w-1/3 h-full rounded-sm">
-                <img src="<?= $this->affiche ?>" alt="movie poster" class="rounded-lg object-cover object-center h-96" />
+                <img src="<?= \mdb\Film::getImage($this->affiche)  ?>" alt="movie poster" class="rounded-lg object-cover object-center h-96" />
             </div>
             <!-- movie details -->
             <div class="flex flex-col lg:w-2/3 space-y-4 lg:mx-8">
@@ -56,7 +51,7 @@ class FilmRenderer
                 </div>
                 <div class="flex space-x-4 items-center text-white">
                     <div class="tags flex space-x-3 font-bold text-primary">
-                        <?php foreach ($this->tags as $tag) : ?>
+                        <?php foreach ($tags as $tag) : ?>
                             <span class="tag bg-white px-2 py-1 rounded-lg"><?= $tag ?></span>
                         <?php endforeach; ?>
                     </div>
@@ -67,13 +62,13 @@ class FilmRenderer
                         <i class="fas fa-calendar mr-1"></i>
                         <span><?= $this->date_sortie ?></span>
                     </div>
-                    <div class="time">
-                        <i class="fas fa-clock mr-1"></i>
-                        <span>2h 30m</span>
+                    <div class="type uppercase">
+                        <i class="fas fa-tags mr-1"></i>
+                        <span><?= $this->type ?></span>
                     </div>
                     <div class="rating">
                         <i class="fas fa-star mr-1"></i>
-                        <span>8.5</span>
+                        <span><?= $this->rating ?></span>
                     </div>
                 </div>
                 <div class="description w-full">
@@ -82,7 +77,7 @@ class FilmRenderer
                 <!-- other details -->
                 <div class="flex flex-col  text-white font-bold">
                     <p>Country : <span class="font-normal country">United States</span></p>
-                    <p>Genre : <span class="font-normal genre"><?= implode(', ', $this->tags) ?></span></p>
+                    <p>Genre : <span class="font-normal genre"><?= implode(', ', $tags) ?></span></p>
                     <p>Release date : <span class="font-normal release-date"><?= $this->date_sortie ?></span></p>
                     <p>Production : <span class="font-normal production">AMC studio</span></p>
                 </div>
@@ -95,10 +90,10 @@ class FilmRenderer
                 <p class="lg:text-4xl md:text-3xl text-2xl tracking-widest font-normal">Actors</p>
                 <i class="fas fa-circle mb-16 mt-3 text-yellow-400"></i>
                 <div class="custom-scrollbar pb-5 flex w-full space-x-6 overflow-x-auto flex-nowrap">
-                    <?php for($i=0; $i<count($this->acteurs_noms);$i++) : ?>
+                    <?php for ($i = 0; $i < count($acteurs_noms); $i++) : ?>
                         <div class="flex flex-col space-y-2 flex-shrink-0 pb-3 flex-grow-0 justify-center items-center shadow-md shadow-gray-700">
-                            <img src="<?= $this->acteurs_photos[$i] ?>" alt="<?= $this->acteurs_noms[$i] ?>" class="lg:w-60 lg:h-60 w-40 h-40 object-cover">
-                            <p class="actor-name"><?= $this->acteurs_noms[$i] ?></p>
+                            <img src="<?= \mdb\Film::getImage($acteurs_photos[$i]) ?>" alt="<?= $acteurs_noms[$i] ?>" class="lg:w-60 lg:h-60 w-40 h-40 object-cover">
+                            <p class="actor-name"><?= $acteurs_noms[$i] ?></p>
                         </div>
                     <?php endfor; ?>
                 </div>
@@ -111,8 +106,8 @@ class FilmRenderer
                 <i class="fas fa-star text-yellow-400"></i> Director <i class="fas fa-star text-yellow-400"></i>
             </p>
             <div class="flex flex-col space-y-2 pb-3 w-[300px] h-[300px] justify-center items-center shadow-inner shadow-yellow-400">
-                <img src="<?= $this->realisateur->photo ?>" alt="<?= $this->realisateur->nom ?>" class="lg:h-60 w-[290px] h-40 object-cover">
-                <p class="actor-name"><?= $this->realisateur->nom ?></p>
+                <img src="<?= \mdb\Film::getImage($realisateur->photo) ?>" alt="<?= $realisateur->nom ?>" class="lg:h-60 w-[290px] h-40 object-cover">
+                <p class="actor-name"><?= $realisateur->nom ?></p>
             </div>
         </section>
 <?php

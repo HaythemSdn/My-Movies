@@ -19,7 +19,7 @@ class Film {
              GROUP BY films.id
              ORDER BY films.rating DESC",
             null,
-            'rendrers\TrendingRenderer'
+            'renderers\TrendingRenderer'
         );
         return $result ? $result : []; 
     }
@@ -29,7 +29,7 @@ class Film {
         $result = $this->mdb->exec(
             "SELECT * FROM films ORDER BY date_sortie DESC",
             null,
-            'rendrers\RecentRenderer'
+            'renderers\RecentRenderer'
         );
         return $result ? $result : []; 
     }
@@ -38,7 +38,7 @@ class Film {
         $result = $this->mdb->exec(
             "SELECT * FROM films WHERE type = 'film' ORDER BY date_sortie DESC LIMIT 3",
             null,
-            'rendrers\NewFilmRenderer'
+            'renderers\NewFilmRenderer'
         );
         return $result ? $result : []; 
     }
@@ -46,37 +46,35 @@ class Film {
         $result = $this->mdb->exec(
             "SELECT * FROM films WHERE type = 'serie' ORDER BY date_sortie DESC LIMIT 3",
             null,
-            'rendrers\NewSerieRenderer'
+            'renderers\NewFilmRenderer'
         );
         return $result ? $result : []; 
     }
 public function getFilm($name) {
     $query = "
-        SELECT 
-            f.titre, f.date_sortie, f.affiche, f.synopsis, 
-            r.nom as realisateur_nom, r.photo as realisateur_photo,
-            GROUP_CONCAT(DISTINCT t.nom) as tags,
-            GROUP_CONCAT(DISTINCT a.nom ORDER BY a.nom) as acteur_noms,
-            GROUP_CONCAT(DISTINCT a.photo ORDER BY a.nom) as acteur_photos
-        FROM films f
-        LEFT JOIN realisateurs r ON f.realisateur_id = r.id
-        LEFT JOIN film_tag ft ON f.id = ft.film_id
-        LEFT JOIN tags t ON ft.tag_id = t.id
-        LEFT JOIN film_acteur fa ON f.id = fa.film_id
-        LEFT JOIN acteurs a ON fa.acteur_id = a.id
-        WHERE f.titre = ?
-        GROUP BY f.id, r.nom, r.photo
-    ";
+    SELECT 
+        f.titre, f.date_sortie, f.affiche, f.synopsis, 
+        r.nom as realisateur_nom, r.photo as realisateur_photo,
+        GROUP_CONCAT(DISTINCT t.nom) as tags,
+        GROUP_CONCAT(DISTINCT a.nom ORDER BY a.nom) as acteurs_noms,
+        GROUP_CONCAT(DISTINCT a.photo ORDER BY a.nom) as acteurs_photos,
+        f.rating, f.type
+    FROM films f
+    LEFT JOIN realisateurs r ON f.realisateur_id = r.id
+    LEFT JOIN film_tag ft ON f.id = ft.film_id
+    LEFT JOIN tags t ON ft.tag_id = t.id
+    LEFT JOIN film_acteur fa ON f.id = fa.film_id
+    LEFT JOIN acteurs a ON fa.acteur_id = a.id
+    WHERE f.titre = ?
+    GROUP BY f.id, r.nom, r.photo
+";
     $params = [$name];
-    $result = $this->mdb->exec($query, $params);
-
-    if ($result) {
-        $filmData = $result[0];
-        return new \rendrers\FilmRenderer($filmData);
-    }
-    return null;
+    $result = $this->mdb->exec($query, $params, 'renderers\FilmPageRenderer');
+    return $result ? $result[0] : null; 
 }
-
+public static function getImage($image){
+    return str_contains($image, "http") ? $image : $GLOBALS['DOCUMENT_DIR'] . "../uploads/" . $image;    
+}
     
     
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace rendrers;
+namespace renderers;
 
 class TrendingRenderer {
     private $titre;
@@ -15,7 +15,7 @@ class TrendingRenderer {
          <a href="film.php?titre=<?=$this->titre?> ">
         <article class="cart flex flex-col items-center relative rounded-xl shadow-lg pb-3 mb-10 w-[400px] h-[400px] bg-white hover:scale-105 transition-all duration-300 ease-in-out">
             <div class="relative group">
-                <img src="<?= htmlspecialchars($this->affiche) ?>" alt="film affiche"
+                <img src="<?= htmlspecialchars(\mdb\Film::getImage($this->affiche)) ?>" alt="film affiche"
                      class="w-[400px] h-[300px] rounded-t-xl object-cover " />
                 <div class="hidden group-hover:flex absolute bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg">
                     <div class="px-3 py-2 border-r">

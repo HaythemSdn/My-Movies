@@ -6,6 +6,7 @@ Autoloader::register();
 
 
 use mdb\Admin;
+use renderers\adminForms\AddCategory;
 use renderers\adminForms\AddFilm;
 
 $admin = new Admin();
@@ -91,7 +92,22 @@ ob_start()
 
         </div>
         <div id="3" class="hidden view">
-            this is add category view
+            <section class="pt-16 pb-10 w-full">
+                <div class="flex flex-col justify-center items-center w-10/12 mx-auto relative">
+                    <p class="lg:text-4xl md:text-3xl self-start text-2xl tracking-widest font-normal">
+                        Add Category
+                    </p>
+                    <?php
+                    use renderers\adminForms\AddActor;
+                    $addCategory = new AddCategory();
+                    if (empty($_POST['nom'])) {
+                        $addCategory->generateForm();
+                    } else {
+                        $addCategory->createCategory($_POST['nom']);
+                    }
+                    ?>
+                </div>
+            </section>
         </div>
         <div id="4" class="hidden view">
     <section class="pt-16 pb-10 w-full">
@@ -100,7 +116,6 @@ ob_start()
                 Add Actor
             </p>
             <?php
-            use renderers\adminForms\AddActor;
             $addActor = new AddActor();
             if (empty($_POST['nom'])) {
                 $addActor->generateForm();
@@ -114,7 +129,23 @@ ob_start()
 </div>
 
         <div id="5" class="hidden view">
-            this is add director view
+        <section class="pt-16 pb-10 w-full">
+        <div class="flex flex-col justify-center items-center w-10/12 mx-auto relative">
+            <p class="lg:text-4xl md:text-3xl self-start text-2xl tracking-widest font-normal">
+                Add Director
+            </p>
+            <?php
+             use renderers\adminForms\AddDirector;
+            $addDirector = new AddDirector();
+            if (empty($_POST['DirectorNom'])) {
+                $addDirector->generateForm();
+            } else {
+                $imgFile = isset($_FILES['DirectorImage']) ? $_FILES['DirectorImage'] : null;
+                $addDirector->createDirector($_POST['DirectorNom'], $imgFile);
+            }
+            ?>
+        </div>
+    </section>
         </div>
     </div>
 

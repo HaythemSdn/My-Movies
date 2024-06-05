@@ -112,6 +112,31 @@ class Admin {
     $result = $this->mdb->exec($query, $params);
     return $result;
 }
+public function createTag($nom)
+{
+    $nom = htmlspecialchars($nom);
+    $query = 'INSERT INTO tags(nom) VALUES (:nom)';
+    $params=[
+        'nom' => $nom
+    ];
+    $result = $this->mdb->exec($query, $params);
+    return $result;
+}
+
+public function createRealisateur($nom, $imgName)
+{
+    $nom = htmlspecialchars($nom);
+    $query = 'INSERT INTO realisateurs (nom, photo) VALUES (:nom, :image)';
+    $params = [
+        'nom' => $nom,
+        'image' => $imgName,
+    ];
+
+    $result = $this->mdb->exec($query, $params);
+    return $result;
+}
+
+
 
 }
 

@@ -10,6 +10,7 @@ $search = new Search();
 $films = $search->getAllFilms();
 $actors = $search->getAllActors();
 $directors = $search->getAllDirectors();
+$categories = $search->getAllTags();
 
 ob_start()
 ?>
@@ -67,6 +68,15 @@ ob_start()
                 <?php endforeach; ?>
             <?php else : ?>
                 <p>No directors found.</p>
+            <?php endif; ?>
+        </section>
+        <section id="categories" class="view flex flex-wrap justify-around">
+            <?php if (!empty($categories)) : ?>
+                <?php foreach ($categories as $r) : ?>
+                    <?= $r->getHTML(); ?>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <p>No categories found.</p>
             <?php endif; ?>
         </section>
     </div>

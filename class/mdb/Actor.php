@@ -14,9 +14,6 @@ class Actor {
     public function getAllActors() {
         $query = "SELECT nom, photo FROM acteurs ORDER BY nom ASC";
         $result = $this->mdb->exec($query, []);
-        
-      
-
         return $result ? $result : []; 
-    }
+    }     
 }

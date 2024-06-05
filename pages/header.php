@@ -13,9 +13,7 @@ $logged = isset($username);
       <input type="text" placeholder="Search movies....." class="lg:pr-8 lg:mr-2 xl:pr-24 xl:mr-5 outline-none capitalize bg-white text-lg tracking-widest placeholder-primary-light" />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <a href="#" class="px-1 lg:px-4">Movies</a>
-    <a href="#" class="px-1 lg:px-4">Series</a>
-    <a href="actor.php" class="px-1 lg:px-4">Actors</a>
+    <a href="dashboard.php" class="px-1 lg:px-4">Dashboard</a>
     <?php
     if ($logged) { ?>
       <div class="relative group pb-1 text-center">

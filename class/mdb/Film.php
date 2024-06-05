@@ -76,6 +76,5 @@ public static function getImage($image){
     return str_contains($image, "http") ? $image : $GLOBALS['DOCUMENT_DIR'] . "../uploads/" . $image;    
 }
     
-    
 }
 

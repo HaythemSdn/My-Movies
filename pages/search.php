@@ -117,7 +117,7 @@ ob_start()
                 const href = this.closest("a").getAttribute("href");
                 setTimeout(() => {
                     window.location.href = href;
-                }, 1000); // Adjust the delay time if needed
+                }, 500); // Adjust the delay time if needed
             });
         });
     });

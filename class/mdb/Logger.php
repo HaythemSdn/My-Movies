@@ -15,6 +15,7 @@ class Logger
     {
         $error = null;
         $granted = false;
+        $user=null;
 
         if (empty($username)) {
             $error = "Username is empty";
@@ -31,7 +32,8 @@ class Logger
 
         return [
             'granted' => $granted,
-            'error' => $error
+            'error' => $error,
+            'user'=>$user
         ];
     }
 

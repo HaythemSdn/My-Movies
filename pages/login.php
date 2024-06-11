@@ -16,7 +16,9 @@ if (isset($_POST['username']) and isset($_POST['password'])){
     $password = $_POST['password'] ;
     $response = $logger->log(trim($username), trim($password)) ;
     if ($response['granted']){
-        $_SESSION['username'] = $username ;
+        $_SESSION['username'] = $response['user']->username;
+        $_SESSION['role']=$response['user']->role;
+        $_SESSION['userId']=$response['user']->id;
         header("Location: index.php");
         exit() ;
     }

@@ -36,7 +36,7 @@ class AddFilm
                 </div>
 
             </div>
-            <div class="flex justify-center items-center">
+            <div class="flex justify-center ">
                 <div>
                     <label for="realisateur_id" class="block text-sm font-semibold text-white mb-2 ">Director</label>
                     <select required id="realisateur_id" name="realisateur_id" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
@@ -44,9 +44,12 @@ class AddFilm
                             <option value="<?= $director->id ?>" class="py-5 hover:bg-secondary hover:text-white"><?= htmlspecialchars($director->nom) ?></option>
                         <?php endforeach; ?>
                     </select>
+                    <button id="addDirector" type="submit" class="text-green-500 ml-4 cursor-pointer ">
+                        Add Director Now!
+                    </button>
                 </div>
                 <div>
-                    <label for="type" class="block text-sm font-semibold text-white mb-2 ">Type</label>
+                    <label for="type" class="block text-sm font-semibold text-white mb-2">Type</label>
                     <select required id="type" name="type" class="block w-[250px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40">
                         <option value="film">Film</option>
                         <option value="serie">Serie</option>
@@ -54,6 +57,7 @@ class AddFilm
                 </div>
 
             </div>
+
 
             <div>
                 <label for="description" class="block text-sm font-semibold text-white mb-2 ">Description</label>
@@ -77,6 +81,9 @@ class AddFilm
                                 </div>
                             <?php endforeach; ?>
                         </div>
+                        <button id="addActor" type="submit" class="text-green-500 ml-4 cursor-pointer ">
+                            Add Actor Now!
+                        </button>
                     </div>
                 </div>
                 <div>
@@ -96,10 +103,19 @@ class AddFilm
                                 </div>
                             <?php endforeach; ?>
                         </div>
+                        <button id="addTag" type="submit" class="text-green-500 ml-4 cursor-pointer ">
+                            Add Tag Now!
+                        </button>
                     </div>
                 </div>
 
             </div>
+            <!-- ayoub was here -->
+            <div>
+                <label for="trailer" class="block text-sm font-semibold text-white mb-2 ">Trailer Link</label>
+                <input required class="block w-[520px] h-[60px] mx-3 p-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40" id="trailer" name="trailerLink"></input>
+            </div>
+            <!-- ayoub was here -->
             <div>
                 <label for="image" class="block text-sm font-semibold text-white mb-2 ">Image</label>
                 <input required type="file" class="block w-[520px] px-4 py-2 mt-2  bg-white border rounded-md focus:border-secondary focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40 mb-4" id="affiche" name="affiche" accept="image/png, image/gif, image/jpeg">
@@ -196,14 +212,43 @@ class AddFilm
                 });
 
 
+
+                // go to add entities 
+                const addDirector = document.getElementById("addDirector");
+                const addActor = document.getElementById("addActor");
+                const addTag = document.getElementById("addTag");
+                const views = document.querySelectorAll("#views div.view");
+                const options = document.querySelectorAll("#options li");
+                const goToView = (id) => {
+                    views.forEach(view => {
+                        view.classList.add("hidden");
+                    });
+                    options.forEach(option => {
+                        option.classList.remove("selected");
+                    });
+                    const SelectedView = document.getElementById(id);
+                    const SelectedOption = document.getElementById("op-" + id);
+                    SelectedView.classList.remove("hidden");
+                    SelectedOption.classList.add("selected");
+                }
+                addDirector.addEventListener("click", function() {
+                    goToView(5);
+                });
+                addActor.addEventListener("click", function() {
+                    goToView(4);
+                });
+                addTag.addEventListener("click", function() {
+                    goToView(3);
+                });
+
             });
         </script>
 <?php
     }
 
-    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null, $actors = [], $tags = [])
+    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null ,$trailer=null, $imgFile = null, $actors = [], $tags = [])
     {
-        $film_id = $this->admin->createFilm($titre, $date_sortie, $realisateur_id, $type, $description, $imgFile);
+        $film_id = $this->admin->createFilm($titre, $date_sortie, $realisateur_id, $type, $description,$trailer, $imgFile);
 
         // Add actors to the film
         foreach ($actors as $actor_id) {
@@ -214,7 +259,7 @@ class AddFilm
         foreach ($tags as $tag_id) {
             $this->admin->addTagToFilm($film_id, $tag_id);
         }
-        header('Location: search.php?content=films');  
+        header('Location: search.php?content=films');
         exit();
     }
 }

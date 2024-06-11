@@ -27,22 +27,22 @@ ob_start()
                 <p class="text-lg">Users</p>
             </li>
             <!-- add film -->
-            <li class="flex flex-col space-y-2 justify-center items-center border-b-2 border-secondary shadow-lg cursor-pointer shadow-gray-700">
+            <li  class="flex flex-col space-y-2 justify-center items-center border-b-2 border-secondary shadow-lg cursor-pointer shadow-gray-700">
                 <i class="fas fa-film text-2xl"></i>
                 <p class="text-lg">Add Film</p>
             </li>
             <!-- add category -->
-            <li class="flex flex-col space-y-2 justify-center items-center border-b-2 border-secondary shadow-lg cursor-pointer shadow-gray-700">
+            <li  id="op-3" class="flex flex-col space-y-2 justify-center items-center border-b-2 border-secondary shadow-lg cursor-pointer shadow-gray-700">
                 <i class="fas fa-tags text-2xl"></i>
                 <p class="text-lg">Add category</p>
             </li>
             <!-- add actor -->
-            <li class="flex flex-col space-y-2 justify-center items-center border-b-2 border-secondary shadow-lg cursor-pointer shadow-gray-700">
+            <li id="op-4" class="flex flex-col space-y-2 justify-center items-center border-b-2 border-secondary shadow-lg cursor-pointer shadow-gray-700">
                 <i class="fas fa-user text-2xl"></i>
                 <p class="text-lg">Add actor</p>
             </li>
             <!-- add director -->
-            <li class="flex flex-col space-y-2 justify-center items-center border-b-2 border-secondary shadow-lg cursor-pointer shadow-gray-700">
+            <li id="op-5" class="flex flex-col space-y-2 justify-center items-center border-b-2 border-secondary shadow-lg cursor-pointer shadow-gray-700">
                 <i class="fas fa-user-tie text-2xl"></i>
                 <p class="text-lg">Add director</p>
             </li>
@@ -84,7 +84,7 @@ ob_start()
                         $imgFile = isset($_FILES['affiche']) ? $_FILES['affiche'] : null ;
                         $tags = isset($_POST['tags']) ? $_POST['tags'] : [] ;
                         $actors = isset($_POST['actors']) ? $_POST['actors'] : [] ;
-                        $AddFilm->createFilm($_POST['titre'], $_POST['date_sortie'], $_POST['realisateur_id'], $_POST['type'], $_POST['synopsis'], $imgFile, $actors, $tags);
+                        $AddFilm->createFilm($_POST['titre'], $_POST['date_sortie'], $_POST['realisateur_id'], $_POST['type'], $_POST['synopsis'],$_POST['trailerLink'], $imgFile, $actors, $tags);
                     }
                     ?>
                 </div>

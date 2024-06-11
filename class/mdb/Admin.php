@@ -20,7 +20,7 @@ class Admin {
         return $result ? $result : []; 
     }
     // Create a new film in the database
-    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null, $imgFile = null)
+    public function createFilm($titre, $date_sortie, $realisateur_id, $type, $description = null,$trailer=null, $imgFile = null)
     {
         $titre = htmlspecialchars($titre);
         $description = htmlspecialchars($description);
@@ -38,8 +38,8 @@ class Admin {
         } else {
             echo "NO IMAGE !!!!";
         }
-        $query = 'INSERT INTO films (titre, date_sortie, affiche, synopsis, realisateur_id, rating, type) 
-                  VALUES (:titre, :date_sortie, :affiche, :synopsis, :realisateur_id, :rating, :type)';
+        $query = 'INSERT INTO films (titre, date_sortie, affiche, synopsis, realisateur_id, rating, type,trailer) 
+                  VALUES (:titre, :date_sortie, :affiche, :synopsis, :realisateur_id, :rating, :type,:trailer)';
         $params = [
             'titre' => $titre,
             'date_sortie' => $date_sortie,
@@ -48,6 +48,7 @@ class Admin {
             'realisateur_id' => $realisateur_id,
             'rating' => 0,
             'type' => $type,
+            'trailer' => $trailer
         ];
 
         $result = $this->mdb->exec($query, $params);
@@ -95,6 +96,14 @@ class Admin {
     {
         $result = $this->mdb->exec(
             "SELECT id, nom FROM tags",
+            null,
+        );
+        return $result ? $result : []; 
+    }
+    public function getAllFilms()
+    {
+        $result = $this->mdb->exec(
+            "SELECT * FROM films",
             null,
         );
         return $result ? $result : []; 

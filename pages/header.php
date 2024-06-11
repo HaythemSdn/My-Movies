@@ -2,18 +2,21 @@
 session_start();
 $username = $_SESSION['username'];
 $logged = isset($username);
+$isAdmin = $_SESSION['role'] === 'admin';
 ?>
 
 <header>
   <nav class="hidden md:flex justify-center space-x-1 lg:space-x-3 text-white mb-10 py-2 font-bold items-center  ">
     <a href="index.php" class="px-1 lg:px-4">Home</a>
     <a href="about.php" class="px-1 lg:px-4">About</a>
-    <a href="search.php?content=films" class="px-1 lg:px-4">Search</a>
-    <div class="flex px-5 space-x-2 lg:space-x-4 py-3 rounded-full shadow-md shadow-primary-light bg-white items-center text-black">
-      <input type="text" placeholder="Search movies....." class="lg:pr-8 lg:mr-2 xl:pr-24 xl:mr-5 outline-none capitalize bg-white text-lg tracking-widest placeholder-primary-light" />
-      <i class="fa-solid fa-magnifying-glass"></i>
+   
+    <div class="flex items-center">
+      <img src="../images/logo.png" alt="Logo" class="h-[150px] w-[150px] object-contain"> <!-- Increased height from h-10 to h-20 -->
     </div>
+    <a href="search.php?content=films" class="px-1 lg:px-4">Search</a>
+    <?php if ($isAdmin) { ?>
     <a href="dashboard.php" class="px-1 lg:px-4">Dashboard</a>
+    <?php } ?>
     <?php
     if ($logged) { ?>
       <div class="relative group pb-1 text-center">
@@ -23,7 +26,7 @@ $logged = isset($username);
             > -->
 
         <div class="hidden absolute hover:block group-hover:block left-1/2 mt-1 transform -translate-x-1/2  w-48 bg-white text-black rounded-lg shadow-lg z-50">
-          <a href="#" class="block px-4 py-2 hover:bg-secondary hover:text-white">My Favourite</a>
+          <a href="films_seen.php" class="block px-4 py-2 hover:bg-secondary hover:text-white">My seen films </a>
           <a href="logout.php" class="block px-4 py-2 hover:bg-secondary hover:text-white">Logout</a>
         </div>
       </div>

@@ -8,7 +8,17 @@ use mdb\Film;
 
 $film = new Film();
 $titre= $_GET['titre'];
-$CurrentFilm = $film->getFilm($titre);
+$CurrentFilm = $film->getFilm($titre,$_SESSION['userId']);
+if(isset($_POST['action'])){
+ $film->toggleVue($_POST['action'],$_POST['film_id'] ,$_SESSION['userId']);
+header("location:films_seen.php");
+
+}
+if (isset($_POST['deleteFilm'])) {
+    $film_id = $_POST['film_id'];
+    $film->DeleteFilm($film_id);
+    header("Location: search.php?content=films");
+}
 
 ob_start()
 ?>

@@ -16,11 +16,10 @@ CREATE TABLE films (
     date_sortie DATE NOT NULL,
     affiche VARCHAR(255) NOT NULL,
     synopsis TEXT NOT NULL,
+    trailer TEXT NOT NULL,
     realisateur_id INT NOT NULL,
-    vu BOOLEAN NOT NULL DEFAULT 0,
     type ENUM('film', 'serie') NOT NULL DEFAULT 'film',
     rating FLOAT NOT NULL DEFAULT 0,
-    season INT NULL,
     FOREIGN KEY (realisateur_id) REFERENCES realisateurs(id)
 );
 
@@ -61,4 +60,13 @@ CREATE TABLE users (
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'user') NOT NULL DEFAULT 'user'
+);
+-Table des vues
+CREATE TABLE vues (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    film_id INT NOT NULL,
+    user_id INT NOT NULL,
+    FOREIGN KEY (film_id) REFERENCES films(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );

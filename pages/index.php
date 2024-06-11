@@ -68,9 +68,9 @@ ob_start()
           <p>No recent films found.</p>
         <?php endif; ?>
       </div>
-      <span class="px-3 py-2 sm:absolute static sm:top-0 mt-10 sm:m-0 sm:right-0 border-2 border-white cursor-pointer hover:bg-white rounded-md hover:text-primary hover:border-transparent">Voir
+      <a href="search.php?content=films"><span class="px-3 py-2 sm:absolute static sm:top-0 mt-10 sm:m-0 sm:right-0 border-2 border-white cursor-pointer hover:bg-white rounded-md hover:text-primary hover:border-transparent">Voir
         <i class="fas fa-plus ml-3 text-secondary"></i>
-      </span>
+      </span></a>
     </div>
   </section>
 
